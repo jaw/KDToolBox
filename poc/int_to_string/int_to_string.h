@@ -181,13 +181,13 @@ constexpr std::uint8_t int_to_string(T integer_value, result_buffer_type &target
     // digit count via logarithm lookup
     std::uint8_t digits_left_to_encode = detail::digit_count(number_to_encode);
 
-    // left-to-right extraction, 2 digits (0-99) per loop
-    // Each iteration costs: 1 divide + 1 multiply + 1 subtract
-    // (vs. 2 divides + 2 mods in the classic right-to-left scheme)
-    #if KDTOOLBOX_ASTREE
+// left-to-right extraction, 2 digits (0-99) per loop
+// Each iteration costs: 1 divide + 1 multiply + 1 subtract
+// (vs. 2 divides + 2 mods in the classic right-to-left scheme)
+#if KDTOOLBOX_ASTREE
     __ASTREE_unroll((20))
-    #endif
-    while (digits_left_to_encode >= 2)
+#endif
+        while (digits_left_to_encode >= 2)
     {
         std::uint64_t divisor = detail::pow10[digits_left_to_encode - 2]; // 10^(L-2)
         auto chunk = static_cast<uint16_t>(number_to_encode / divisor);
