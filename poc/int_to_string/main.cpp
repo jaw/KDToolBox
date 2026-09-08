@@ -13,6 +13,9 @@ This file is part of KDToolBox.
 
 constexpr bool compare_number(result_buffer_type &source, size_t num_characters, const std::string &expected)
 {
+    #if KDTOOLBOX_ASTREE
+    __ASTREE_unroll((20))
+    #endif
     for (size_t i = 0; i < num_characters; i++)
     {
         if (source[i] != expected[i])
